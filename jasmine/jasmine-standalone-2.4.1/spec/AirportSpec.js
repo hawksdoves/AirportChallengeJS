@@ -1,10 +1,12 @@
 describe("Airport", function(){
 	var airport;
 	var plane;
+	var plane2;
 	
 	beforeEach(function(){
 		airport = new Airport();
 		plane = new Plane();
+		plane2 = new Plane();
 	});
 
 	it("has a default capacity", function(){
@@ -15,4 +17,47 @@ describe("Airport", function(){
 		airport = new Airport(20);
 		expect(airport.capacity).toEqual(20);
 	});
+
+	it("has an empty array for storing planes", function(){
+		expect(airport.dock).toEqual([]);
+	});
+
+	describe("#request landing", function(){
+
+		it("will make the plane land into the dock", function(){
+			airport.requestLanding(plane);
+			expect(airport.dock).toContain(plane);
+		});
+
+		it("will call the land function on plane", function(){
+			spyOn(plane, 'land');
+			airport.requestLanding(plane);
+			expect(plane.land).toHaveBeenCalled();
+		});
+
+		it("will not allow a plane to land if the dock is full", function(){
+			airport = new Airport(1);
+			airport.requestLanding(plane);
+			expect(function() {airport.requestLanding(plane2) }).toThrowError("Airport at capacity");
+		});
+
+	});
+
+	describe("#request takeoff", function(){
+
+		it("will make the plane leave the dock", function(){
+			airport.requestLanding(plane);
+			airport.requestTakeOff(plane);
+			expect(airport.dock).not.toContain(plane);
+		});
+
+		it("will call the takeoff function on plane", function(){
+			spyOn(plane, 'takeOff');
+			airport.requestLanding(plane);
+			airport.requestTakeOff(plane);
+			expect(plane.takeOff).toHaveBeenCalled();
+		});
+
+	});
+
 });
