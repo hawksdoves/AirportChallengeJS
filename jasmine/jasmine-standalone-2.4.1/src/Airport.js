@@ -1,7 +1,9 @@
-function Airport() {
-}
+const CAPACITY = 10;
+function Airport(capacity=CAPACITY) {
+	this.capacity = capacity;
+};
 
-Song.prototype.persistFavoriteStatus = function(value) {
+Aiport.prototype.persistFavoriteStatus = function(value) {
   // something complicated
   throw new Error("not yet implemented");
 };
