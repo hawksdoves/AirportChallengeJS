@@ -58,6 +58,11 @@ describe("Airport", function(){
 			expect(plane.takeOff).toHaveBeenCalled();
 		});
 
+		it("will not be able to tell a plane to takeoff if the plane is not in the dock", function(){
+			airport.requestLanding(plane);
+			expect( function() {airport.requestTakeOff(plane2)}).toThrowError("This plane is not at this airport");
+		});
+
 	});
 
 });
