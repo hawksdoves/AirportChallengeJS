@@ -47,6 +47,7 @@ describe("Airport", function(){
 
 		beforeEach(function(){
 			spyOn(Math, 'random').and.returnValue(0.1);
+			spyOn(plane, 'flying').and.returnValue(true);
 		});
 
 		describe("#request landing", function(){
